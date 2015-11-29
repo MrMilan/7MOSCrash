@@ -79,15 +79,19 @@ package MOS7
 
   model crash
     parameter Real m(start = 76, fixed = true);
-    parameter Real v(start = 65 / 3.6, fixed = false);
+    parameter Real v0(start = 65 / 3.6, fixed = false);
+    Real v;
     Real a(start = -30, fixed = false);
     Real E, s;
   initial equation
-    der(v) = 0;
+    v = v0;
   equation
     E = m * v ^ 2 / 2;
     v = s / time;
     der(v) = a;
+    when time > 25 then
+      a = -10;
+    end when;
   end crash;
   annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), uses(Modelica(version = "2.2.2")));
 end MOS7;
