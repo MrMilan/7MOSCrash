@@ -78,19 +78,24 @@ package MOS7
   end Rc;
 
   model crash
-    parameter Real m(start = 76, fixed = true);
-    parameter Real v0(start = 65 / 3.6, fixed = false);
-    Real v;
-    Real a(start = -30, fixed = false);
-    Real E, s;
+    parameter Real mass(start = 76, fixed = true);
+    parameter Real velocity0(start = 65 / 3.6, fixed = false);
+    Real velocity;
+    Real acceleration(start = 10, fixed = false);
+    Real Energy, shift;
   initial equation
-    v = v0;
+    velocity = velocity0;
   equation
-    E = m * v ^ 2 / 2;
-    v = s / time;
+    Energy = mass * velocity ^ 2 / 2;
+    velocity = shift / time;
     der(v) = a;
-    when time > 25 then
-      a = -10;
+    if time > 25 then
+      acceleration = -100;
+    else
+      acceleration = 0;
+    end if;
+    when velocity < 0 then
+      reinit(velocity, 0);
     end when;
   end crash;
   annotation(Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), uses(Modelica(version = "2.2.2")));
