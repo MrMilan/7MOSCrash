@@ -88,7 +88,7 @@ package MOS7
   equation
     Energy = mass * velocity ^ 2 / 2;
     velocity = shift / time;
-    der(v) = a;
+    der(velocity) = acceleration;
     if time > 25 then
       acceleration = -100;
     else
