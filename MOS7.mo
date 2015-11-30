@@ -85,16 +85,17 @@ package MOS7
     Real Energy, shift;
   initial equation
     velocity = velocity0;
+    Energy = mass * velocity0 ^ 2 / 2;
   equation
     Energy = mass * velocity ^ 2 / 2;
     velocity = shift / time;
     der(velocity) = acceleration;
-    if time > 25 then
+    if time > 25 and velocity > 0 then
       acceleration = -100;
     else
       acceleration = 0;
     end if;
-    when velocity < 0 then
+    when velocity <= 0 then
       reinit(velocity, 0);
     end when;
   end crash;
