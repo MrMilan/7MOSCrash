@@ -82,7 +82,7 @@ package MOS7
     parameter Real velocity0(start = 65 / 3.6, fixed = false);
     Real velocity;
     Real acceleration(start = 10, fixed = false);
-    Real Energy, shift;
+    Real Energy, shift, Power;
   initial equation
     velocity = velocity0;
     Energy = mass * velocity0 ^ 2 / 2;
@@ -90,7 +90,9 @@ package MOS7
     Energy = mass * velocity ^ 2 / 2;
     velocity = shift / time;
     der(velocity) = acceleration;
+    abs(der(Energy)) = Power;
     if time > 25 and velocity > 0 then
+      //accident time is 25 s
       acceleration = -100;
     else
       acceleration = 0;
